@@ -34,3 +34,4 @@ Have some questions make sure you head over to your [buildspace Dashboard](https
 10. Run again `anchor build`
 11. Deploy `anchor deploy`
 12. Check status `https://explorer.solana.com/address/DT3rnDBUi1WmafAFsNLVnNbPfNRJZ54t2x8NppY58ALi?cluster=devnet`
+13. Send token to address `solana airdrop 2 EWbEMg4RgQWnhJZ2gNb2BeY82oVuQnzXieQUwdPXPxts --url devnet`
