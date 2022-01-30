@@ -49,6 +49,10 @@ pub mod myepicproject {
       Ok(())
     }
   }
+
+  pub fn donate(ctx: Context<AddGif>, id: u64) -> ProgramResult {
+     Ok(())
+  }
 }
 
 #[derive(Accounts)]

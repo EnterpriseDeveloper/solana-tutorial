@@ -171,8 +171,22 @@ const App = () => {
     }
   };
 
-  const votes = async () =>{
-    console.log("work")
+  const votes = async (item) =>{
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+      await program.rpc.vote(item.id, {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+          user: provider.wallet.publicKey,
+        },
+      });
+      console.log("Voted");
+
+      await getGifList();
+    } catch (error) {
+      console.log("Error voting:", error);
+    }
   }
 
   const renderConnectedContainer = () => {
@@ -217,10 +231,10 @@ const App = () => {
                 <div className="flex direction">
                   <div className="flex">
                     <input/>
-                    <button className="donate-button cta-button">Donate</button>
+                    <button className="donate-button cta-button">{item.donation.toString()} Donation</button>
                   </div>
                   <div className="flex">
-                    <button onClick={()=>{votes()}} className="vote-button cta-button">Likes</button>
+                    <button onClick={()=>{votes(item)}} className="vote-button cta-button">{item.votes.toString()} Likes</button>
                   </div>
                 </div>
               </div>
