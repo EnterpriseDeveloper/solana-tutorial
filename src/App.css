@@ -56,6 +56,7 @@
   background: -webkit-linear-gradient(left, #60c657, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
+  cursor: pointer;
 }
 
 .submit-gif-button {
@@ -63,6 +64,7 @@
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .footer-container {
@@ -127,4 +129,32 @@
 
 .connected-container button {
   height: 50px;
+}
+
+.owner {
+  color: white
+}
+
+.flex{
+  display: flex;
+}
+
+.direction{
+  justify-content: space-around;
+}
+
+.vote-button{
+  background: -webkit-linear-gradient(left, #44ce4f, #35e2d9);
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.donate-button{
+  background: -webkit-linear-gradient(left, #ce5444, #e29135);
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+  margin-left: 10px;
+  cursor: pointer;
 }

@@ -16,16 +16,38 @@ pub mod myepicproject {
     let base_account = &mut ctx.accounts.base_account;
     let user = &mut ctx.accounts.user;
 
-	// Build the struct.
+    // Build the struct.
     let item = ItemStruct {
+      id: base_account.total_gifs,
       gif_link: gif_link.to_string(),
       user_address: *user.to_account_info().key,
+      votes: 0,
+      donation: 0,
     };
-		
-	// Add it to the gif_list vector.
+
+    // Add it to the gif_list vector.
     base_account.gif_list.push(item);
     base_account.total_gifs += 1;
     Ok(())
+  }
+
+  // vote gif
+  pub fn vote(ctx: Context<AddGif>, id: u64) -> ProgramResult {
+    let base_account = &mut ctx.accounts.base_account;
+    let opt_i = base_account.gif_list.iter().position(|x| x.id == id );
+
+    let i = match opt_i {
+       Some(index) => index as i32,
+       None => -1
+    };
+
+    if i == -1 {
+      return Err(ErrorCode::NotFound.into());
+    } else {
+      let num_usize: usize = i as usize;
+      base_account.gif_list[num_usize].votes += 1;
+      Ok(())
+    }
   }
 }
 
@@ -35,7 +57,7 @@ pub struct StartStuffOff<'info> {
   pub base_account: Account<'info, BaseAccount>,
   #[account(mut)]
   pub user: Signer<'info>,
-  pub system_program: Program <'info, System>,
+  pub system_program: Program<'info, System>,
 }
 
 // Add the signer who calls the AddGif method to the struct so that we can save it
@@ -50,13 +72,22 @@ pub struct AddGif<'info> {
 // Create a custom struct for us to work with.
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct ItemStruct {
-    pub gif_link: String,
-    pub user_address: Pubkey,
+  pub id: u64,
+  pub gif_link: String,
+  pub user_address: Pubkey,
+  pub votes: u64,
+  pub donation: u64,
 }
 
 #[account]
 pub struct BaseAccount {
-    pub total_gifs: u64,
-	// Attach a Vector of type ItemStruct to the account.
-    pub gif_list: Vec<ItemStruct>,
+  pub total_gifs: u64,
+  // Attach a Vector of type ItemStruct to the account.
+  pub gif_list: Vec<ItemStruct>,
+}
+
+#[error]
+pub enum ErrorCode {
+  #[msg("Gif not found.")]
+  NotFound,
 }

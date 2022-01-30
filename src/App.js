@@ -171,6 +171,10 @@ const App = () => {
     }
   };
 
+  const votes = async () =>{
+    console.log("work")
+  }
+
   const renderConnectedContainer = () => {
     // If we hit this, it means the program account hasn't been initialized.
     if (gifList === null) {
@@ -209,6 +213,16 @@ const App = () => {
             {gifList.map((item, index) => (
               <div className="gif-item" key={index}>
                 <img src={item.gifLink} />
+                <p className="owner">Owner: {item.userAddress.toString()}</p>
+                <div className="flex direction">
+                  <div className="flex">
+                    <input/>
+                    <button className="donate-button cta-button">Donate</button>
+                  </div>
+                  <div className="flex">
+                    <button onClick={()=>{votes()}} className="vote-button cta-button">Likes</button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
